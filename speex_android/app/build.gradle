@@ -3,14 +3,16 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.speex.zhouzhoufamily.speex_android"
+        applicationId "com.zhouzhoufamily.speex_android"
         minSdkVersion 20
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         externalNativeBuild {
             cmake {
+                cFlags "-DFIXED_POINT -DUSE_KISS_FFT -UHAVE_CONFIG_H"
                 cppFlags ""
+                abiFilters 'armeabi', 'armeabi-v7a'
             }
         }
     }
@@ -21,15 +23,17 @@ android {
         }
     }
 
+    // cmake add
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
         }
-    }
+    } // end cmake add
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    api files('libs/speex_1.2.0.jar')
 }

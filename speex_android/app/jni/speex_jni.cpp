@@ -17,7 +17,7 @@ void *dec_state;
 static JavaVM *gJavaVM;
 
 extern "C"
-JNIEXPORT jint JNICALL Java_com_audio_Speex_open
+JNIEXPORT jint JNICALL Java_com_speex_util_SpeexUtil_open
   (JNIEnv *env, jobject obj, jint compression) {
     int tmp;
 
@@ -38,7 +38,7 @@ JNIEXPORT jint JNICALL Java_com_audio_Speex_open
 }
 
 extern "C"
-JNIEXPORT jint Java_com_audio_Speex_encode
+JNIEXPORT jint Java_com_speex_util_SpeexUtil_encode
     (JNIEnv *env, jobject obj, jshortArray lin, jint offset, jbyteArray encoded, jint size) {
 
         jshort buffer[enc_frame_size];
@@ -67,7 +67,7 @@ JNIEXPORT jint Java_com_audio_Speex_encode
 }
 
 extern "C"
-JNIEXPORT jint JNICALL Java_com_audio_Speex_decode
+JNIEXPORT jint JNICALL Java_com_speex_util_SpeexUtil_decode
     (JNIEnv *env, jobject obj, jbyteArray encoded, jshortArray lin, jint size) {
 
         jbyte buffer[dec_frame_size];
@@ -87,7 +87,7 @@ JNIEXPORT jint JNICALL Java_com_audio_Speex_decode
 }
 
 extern "C"
-JNIEXPORT jint JNICALL Java_com_audio_getFrameSize
+JNIEXPORT jint JNICALL Java_com_speex_util_SpeexUtil_getFrameSize
     (JNIEnv *env, jobject obj) {
 
     if (!codec_open)
@@ -97,7 +97,7 @@ JNIEXPORT jint JNICALL Java_com_audio_getFrameSize
 }
 
 extern "C"
-JNIEXPORT void JNICALL Java_com_audio_Speex_close
+JNIEXPORT void JNICALL Java_com_speex_util_SpeexUtil_close
     (JNIEnv *env, jobject obj) {
 
     if (--codec_open != 0)
