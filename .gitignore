@@ -1,0 +1,6 @@
+# Ignore config
+
+.DS_Store
+
+# vscode
+**/.vscode/
