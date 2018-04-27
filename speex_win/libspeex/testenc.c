@@ -13,7 +13,7 @@ extern long long spx_mips;
 #define FRAME_SIZE 160
 #include <math.h>
 
-// wav头部结构体  
+// wav header struct  
 struct wave_header {
 
 	char riff[4];
@@ -93,7 +93,7 @@ int encFun(char *inFile, char *outFile)
 	void *state;//encode state
 	SpeexBits bits;
 	int i, tmp;
-	int bitCount = 0;//记录字节数
+	int bitCount = 0;//count bit bytes
 
 	state = speex_encoder_init(speex_lib_get_mode(SPEEX_MODEID_NB));
 
@@ -144,7 +144,7 @@ int decFun(char *inFile, char *outFile)
 	void *state;//decode state
 	SpeexBits bits;
 	int i, tmp;
-	int bitCount = 0;//记录字节数
+	int bitCount = 0;//count bit bytes
 
 	state = speex_decoder_init(speex_lib_get_mode(SPEEX_MODEID_NB));
 
@@ -154,7 +154,7 @@ int decFun(char *inFile, char *outFile)
 	fin = fopen(inFile, "rb");
 	fout = fopen(outFile, "wb+");
 
-	//写入wav头部
+	//write wav header
 	char *header = createWaveHeader(0, 1, 8000, 16);
 	fwrite(header, 1, 44, fout);
 
@@ -182,6 +182,14 @@ int decFun(char *inFile, char *outFile)
 	speex_decoder_destroy(state);
 	speex_bits_destroy(&bits);
 
+	//write bit bytes.
+	fseek(fout, 40, SEEK_SET);
+	fwrite(&bitCount, 1, 4, fout);
+
+	fseek(fout, 4, SEEK_SET);
+	bitCount += 36;
+	fwrite(&bitCount, 1, 4, fout);
+
 	fclose(fin);
 	fclose(fout);
 
@@ -203,6 +211,11 @@ int main(int argc, char **argv)
 	else if (strcmp("-d", argv[1]) == 0)
 	{
 		decFun(argv[2], argv[3]);
+	}
+	else if (strcmp("-ed", argv[1]) == 0)
+	{
+		encFun(argv[2], argv[3]);
+		decFun(argv[3], argv[4]);
 	}
 	else
 	{

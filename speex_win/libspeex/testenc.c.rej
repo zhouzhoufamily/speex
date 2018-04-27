@@ -1,0 +1,12 @@
+diff a/speex_win/libspeex/testenc.c b/speex_win/libspeex/testenc.c	(rejected hunks)
+@@ -156,8 +156,8 @@
+ 	fout = fopen(outFile, "wb+");
+ 
+ 	//д��wavͷ��
+-	char *header = createWaveHeader(0, 1, 8000, 16);
+-	fwrite(header, 1, 44, fout);
++	/*char *header = createWaveHeader(0, 1, 8000, 16);
++	fwrite(header, 1, 44, fout);*/
+ 
+ 	speex_bits_init(&bits);
+ 	while (!feof(fin))
