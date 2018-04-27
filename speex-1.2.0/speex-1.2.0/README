@@ -7,3 +7,10 @@ To use the Speex command line tools:
 % speexenc [options] input_file.wav compressed_file.spx
 
 % speexdec [options] compressed_file.spx output_file.wav
+
+
+% testenc.exe origin.wav output_test.spx
+
+% speexdec.exe output_test.spx output.wav
+
+% testdenoise.exe origin.wav output.wav
