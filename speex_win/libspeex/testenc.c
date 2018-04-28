@@ -120,12 +120,13 @@ int encFun(char *inFile, char *outFile)
 
 		speex_encode(state, input, &bits);
 		nbBits = speex_bits_write(&bits, cbits, 200);
-		bitCount += bits.nbBits;
 
 		speex_bits_reset(&bits);
 
 		fwrite(&nbBits, sizeof(int), 1, fout);
 		fwrite(cbits, 1, nbBits, fout);
+
+		bitCount += bits.nbBits * 1;
 	}
 	fprintf(stderr, "Total encoded size: %d bits\n", bitCount);
 	speex_encoder_destroy(state);
@@ -177,9 +178,9 @@ int decFun(char *inFile, char *outFile)
 		for (size_t i = 0; i < FRAME_SIZE; i++)
 			out[i] = output[i];
 
-		bitCount += bits.nbBits;
-
 		fwrite(out, sizeof(short), FRAME_SIZE, fout);
+
+		bitCount += FRAME_SIZE * sizeof(short);
 	}
 	fprintf(stderr, "Total encoded size: %d bits\n", bitCount);
 	speex_decoder_destroy(state);
