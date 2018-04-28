@@ -103,6 +103,9 @@ int encFun(char *inFile, char *outFile)
 	fin = fopen(inFile, "rb");
 	fout = fopen(outFile, "wb+");
 
+	//remove header
+	fseek(fin, 44, SEEK_SET);
+
 	speex_bits_init(&bits);
 	while (!feof(fin))
 	{
